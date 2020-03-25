@@ -1,4 +1,4 @@
-package Utils;
+package Utils.JSON;
 
 import BasicClasses.StudyGroup;
 import Collection.CollectionManager;
