@@ -28,8 +28,8 @@ public class Controller {
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         } finally {
-            System.out.println("Сокет-сервер закрыт.");
             serverSocket.close();
+            System.out.println("Сокет-сервер закрыт.");
         }
     }
 
