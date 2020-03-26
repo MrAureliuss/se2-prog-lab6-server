@@ -1,3 +1,4 @@
+/*
 package ServerSocket;
 
 import java.io.BufferedWriter;
@@ -16,7 +17,7 @@ class Sender {
 
     void sendString(String message) {
         try {
-            outString.write(message);
+            outObject.writeUTF(message);
             outString.flush();
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
@@ -33,3 +34,4 @@ class Sender {
     }
 
 }
+*/
