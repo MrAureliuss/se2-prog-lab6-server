@@ -27,7 +27,7 @@ public class Controller {
 
             } catch (IOException ex) {
                 if (ex.getMessage().equals("Connection reset")) {
-                    System.out.println("Потеряно соединение с клиентом." + clientSocket);
+                    System.out.println("Потеряно соединение с клиентом: " + clientSocket);
                 }
             }
         }
