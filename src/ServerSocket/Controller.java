@@ -1,7 +1,6 @@
 package ServerSocket;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -14,16 +13,22 @@ public class Controller {
         try {
             serverSocket = new ServerSocket(4321);
             System.out.println("Cокет-сервер запущен. Ожидание подключения клиентов...");
-            clientSocket = serverSocket.accept();
 
-            Sender sender = new Sender(this);
-
-            try {
-                in = new ObjectInputStream(clientSocket.getInputStream());
-                sender.sendString(in.readLine());
-            } finally {
-                clientSocket.close();
-                in.close();
+            while (true) {
+                try {
+                    StringBuilder yourData = new StringBuilder();
+                    clientSocket = serverSocket.accept();
+                    while (clientSocket.getInputStream().read() != -1) {
+                        new BufferedReader(new InputStreamReader(clientSocket.getInputStream())).lines().forEach(yourData::append);
+                        System.out.println(yourData.toString());
+                    }
+                    System.out.println("Клиент ушел");
+                } catch (NullPointerException ex) {
+                    System.out.println(in);
+                } finally {
+                    clientSocket.close();
+                    if (in != null) { in.close(); }
+                }
             }
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
