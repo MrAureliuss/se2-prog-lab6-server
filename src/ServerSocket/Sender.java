@@ -1,3 +1,4 @@
+/*
 package ServerSocket;
 
 import java.io.BufferedWriter;
@@ -33,3 +34,4 @@ class Sender {
     }
 
 }
+*/
