@@ -1,6 +1,8 @@
 package BasicClasses;
 
-public enum Semester {
+import java.io.Serializable;
+
+public enum Semester implements Serializable {
     THIRD(3),
     FOURTH(4),
     FIFTH(5);

@@ -1,6 +1,8 @@
 package BasicClasses;
 
-public class Coordinates {
+import java.io.Serializable;
+
+public class Coordinates implements Serializable {
     public Coordinates(Integer x, float y) {
         this.x = x;
         this.y = y;
