@@ -1,5 +1,7 @@
 package ServerSocket;
 
+import Utils.CommandHandler.Decrypting;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -8,7 +10,6 @@ public class Controller {
     private static Socket clientSocket; //сокет для общения
     private static ServerSocket server; // серверсокет
     private static ObjectInputStream in; // поток чтения из сокета
-    private static BufferedWriter out; // поток записи в сокет
 
     public void run() throws IOException {
         try {
@@ -21,15 +22,15 @@ public class Controller {
                     try {
                         for (;;) {
                             in = new ObjectInputStream(clientSocket.getInputStream());
-                            Object o = (Object) in.readObject();
-                            System.out.println(o.getClass().getName());
+                            Object o = in.readObject();
+                            Decrypting.decrypt(o);
                         }
 
                     } catch (EOFException ex) {
                         System.out.println("Клиент " + clientSocket + " того, откинулся...");
                     } finally { // в любом случае сокет будет закрыт
                         clientSocket.close();
-                        in.close();
+                        if (in != null) { in.close(); }
                     }
                 }
             } finally {
@@ -37,6 +38,7 @@ public class Controller {
                 server.close();
             }
         } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
             System.err.println(e);
         }
     }

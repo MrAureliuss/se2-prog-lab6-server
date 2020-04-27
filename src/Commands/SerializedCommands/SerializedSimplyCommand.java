@@ -10,4 +10,8 @@ public class SerializedSimplyCommand implements Serializable {
     public SerializedSimplyCommand(Command command) {
         this.command = command;
     }
+
+    public Command getCommand() {
+        return command;
+    }
 }

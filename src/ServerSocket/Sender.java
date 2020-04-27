@@ -1,4 +1,3 @@
-/*
 package ServerSocket;
 
 import java.io.BufferedWriter;
@@ -7,12 +6,8 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
 
 class Sender {
-    private ObjectOutputStream outObject;
-    private BufferedWriter outString;
-
     Sender(Controller controller) throws IOException {
-        outObject = new ObjectOutputStream(controller.getClientSocket().getOutputStream());
-        outString = new BufferedWriter(new OutputStreamWriter(controller.getClientSocket().getOutputStream()));
+
     }
 
     void sendString(String message) {
@@ -34,4 +29,4 @@ class Sender {
     }
 
 }
-*/
+

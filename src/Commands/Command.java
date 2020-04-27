@@ -7,6 +7,6 @@ import java.io.Serializable;
  * Абстрактный класс команд. На его основе создается остальные команды.
  */
 public abstract class Command implements Serializable {
-    protected abstract void writeInfo();
-    protected abstract void execute(String[] args) throws IOException;
+    private static final long serialVersionUID = 32L;
+    public abstract void execute(String[] args) throws IOException;
 }

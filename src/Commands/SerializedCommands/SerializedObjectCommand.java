@@ -12,4 +12,12 @@ public class SerializedObjectCommand implements Serializable {
         this.command = command;
         this.object = object;
     }
+
+    public Command getCommand() {
+        return command;
+    }
+
+    public Object getObject() {
+        return object;
+    }
 }

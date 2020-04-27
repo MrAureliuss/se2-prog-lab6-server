@@ -1,37 +1,20 @@
 package Commands;
 
-import BasicClasses.StudyGroup;
-import Commands.ConcreteCommands.ExecuteScript;
-import Commands.ConcreteCommands.Info;
-import Commands.SerializedCommands.SerializedSimplyCommand;
-import Commands.Utils.Creaters.ElementCreator;
-
 import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 
 /**
  * Ресивер(получатель), отправляет серилизованные объекты на сервер.
  */
 public class CommandReceiver {
-    private final CommandInvoker commandInvoker;
-
-    public CommandReceiver(CommandInvoker commandInvoker) {
-        this.commandInvoker = commandInvoker;
+    public static void info() throws IOException {
+        System.out.println("INFO");
     }
 
-    public void help() {
-        commandInvoker.getCommandMap().forEach((name, command) -> command.writeInfo());
-    }
-
-    public void info() throws IOException {
-    }
-
-    public void show() {
+    public static void show() {
         //CollectionManager.show();
     }
 
-    public void add() {
+    public static void add() {
         /*CollectionManager.add(ElementCreator.createStudyGroup());
         System.out.println("Элемент добавлен в коллекцию."); */
     }
@@ -40,7 +23,7 @@ public class CommandReceiver {
      *
      * @param ID - апдейт элемента по ID.
      */
-    public void update(String ID) {
+    public static void update(String ID) {
         /*Integer groupId;
         try {
             groupId = Integer.parseInt(ID);
@@ -55,7 +38,7 @@ public class CommandReceiver {
      *
      * @param ID - удаление по ID.
      */
-    public void removeById(String ID) {
+    public static void removeById(String ID) {
         /*Integer groupId;
         try {
             groupId = Integer.parseInt(ID);
@@ -68,41 +51,32 @@ public class CommandReceiver {
         }*/
     }
 
-    public void clear() {
+    public static void clear() {
         /*CollectionManager.clear();
         System.out.println("Коллекция успешно очищена.");*/
     }
 
-    public void exit() {
-        System.out.println("Завершение работы клиента.");
-        System.exit(0);
-    }
-
-    public void head() {
+    public static void head() {
        // CollectionManager.head();
     }
 
-    public void remove_greater() {
+    public static void remove_greater() {
         //CollectionManager.remove_greater(ElementCreator.createStudyGroup());
     }
 
-    public void remove_lower() {
+    public static void remove_lower() {
         //CollectionManager.remove_lower(ElementCreator.createStudyGroup());
     }
 
-    public void min_by_semester_enum() {
+    public static void min_by_semester_enum() {
         //CollectionManager.min_by_semester_enum();
     }
 
-    public void maxByGroupAdmin() {
+    public static void maxByGroupAdmin() {
         //CollectionManager.maxByGroupAdmin();
     }
 
-    public void countByGroupAdmin() {
+    public static void countByGroupAdmin() {
         //CollectionManager.countByGroupAdmin(ElementCreator.createPerson());
-    }
-
-    public void executeScript(String path) {
-
     }
 }

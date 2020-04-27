@@ -3,26 +3,20 @@ package Commands.ConcreteCommands;
 import Commands.Command;
 import Commands.CommandReceiver;
 
+import java.io.IOException;
+
 /**
  * Конкретная команда подсчета по админу.
  */
 public class CountByGroupAdmin extends Command {
-    private final CommandReceiver commandReceiver;
-
-    public CountByGroupAdmin(CommandReceiver commandReceiver) {
-        this.commandReceiver = commandReceiver;
-    }
+    private static final long serialVersionUID = 32L;
 
     @Override
-    protected void execute(String[] args) {
+    public void execute(String[] args) throws IOException {
         if (args.length > 1) {
             System.out.println("Введен не нужный аргумент. Команда приведена к базовой команде count_by_group_admin.");
         }
-        commandReceiver.countByGroupAdmin();
+        CommandReceiver.countByGroupAdmin();
     }
 
-    @Override
-    protected void writeInfo() {
-        System.out.println("Команда count_by_group_admin  – вывести количество элементов, значение поля groupAdmin которых равно заданному.");
-    }
 }
