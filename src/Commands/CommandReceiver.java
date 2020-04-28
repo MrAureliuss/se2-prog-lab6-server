@@ -1,20 +1,33 @@
 package Commands;
 
+import Commands.ConcreteCommands.Info;
+import Commands.SerializedCommands.*;
+
 import java.io.*;
+import java.net.Socket;
 
 /**
  * Ресивер(получатель), отправляет серилизованные объекты на сервер.
  */
 public class CommandReceiver {
-    public static void info() throws IOException {
+    private final Socket socket;
+
+    public CommandReceiver(Socket socket) {
+        this.socket = socket;
+    }
+
+    public void info() throws IOException {
+        ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+        System.out.println(socket);
+        out.writeObject(new SerializedArgumentCommand(new Info(), "Cock\nABC\nrrrrr"));
         System.out.println("INFO");
     }
 
-    public static void show() {
+    public void show() {
         //CollectionManager.show();
     }
 
-    public static void add() {
+    public void add() {
         /*CollectionManager.add(ElementCreator.createStudyGroup());
         System.out.println("Элемент добавлен в коллекцию."); */
     }
@@ -23,7 +36,7 @@ public class CommandReceiver {
      *
      * @param ID - апдейт элемента по ID.
      */
-    public static void update(String ID) {
+    public void update(String ID) {
         /*Integer groupId;
         try {
             groupId = Integer.parseInt(ID);
@@ -38,7 +51,7 @@ public class CommandReceiver {
      *
      * @param ID - удаление по ID.
      */
-    public static void removeById(String ID) {
+    public void removeById(String ID) {
         /*Integer groupId;
         try {
             groupId = Integer.parseInt(ID);
@@ -51,32 +64,32 @@ public class CommandReceiver {
         }*/
     }
 
-    public static void clear() {
+    public void clear() {
         /*CollectionManager.clear();
         System.out.println("Коллекция успешно очищена.");*/
     }
 
-    public static void head() {
+    public void head() {
        // CollectionManager.head();
     }
 
-    public static void remove_greater() {
+    public void removeGreater() {
         //CollectionManager.remove_greater(ElementCreator.createStudyGroup());
     }
 
-    public static void remove_lower() {
+    public void removeLower() {
         //CollectionManager.remove_lower(ElementCreator.createStudyGroup());
     }
 
-    public static void min_by_semester_enum() {
+    public void minBySemesterEnum() {
         //CollectionManager.min_by_semester_enum();
     }
 
-    public static void maxByGroupAdmin() {
+    public  void maxByGroupAdmin() {
         //CollectionManager.maxByGroupAdmin();
     }
 
-    public static void countByGroupAdmin() {
+    public void countByGroupAdmin() {
         //CollectionManager.countByGroupAdmin(ElementCreator.createPerson());
     }
 }

@@ -22,8 +22,9 @@ public class Controller {
                     try {
                         for (;;) {
                             in = new ObjectInputStream(clientSocket.getInputStream());
+                            Decrypting decrypting = new Decrypting(clientSocket);
                             Object o = in.readObject();
-                            Decrypting.decrypt(o);
+                            decrypting.decrypt(o);
                         }
 
                     } catch (EOFException ex) {
