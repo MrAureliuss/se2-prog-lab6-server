@@ -1,6 +1,9 @@
 package Utils.CommandHandler;
 
 import Commands.Command;
+import Commands.SerializedCommands.SerializedArgumentCommand;
+import Commands.SerializedCommands.SerializedCombinedCommand;
+import Commands.SerializedCommands.SerializedObjectCommand;
 import Commands.SerializedCommands.SerializedSimplyCommand;
 
 import java.io.IOException;
@@ -17,8 +20,29 @@ public class Decrypting {
         if (o instanceof SerializedSimplyCommand) {
             SerializedSimplyCommand simplyCommand = (SerializedSimplyCommand) o;
             Command command = simplyCommand.getCommand();
-            String[] args = {};
-            command.execute(args, socket);
+            String arg = "";
+            command.execute(arg, socket);
+        }
+
+        if (o instanceof SerializedArgumentCommand) {
+            SerializedArgumentCommand argumentCommand = (SerializedArgumentCommand) o;
+            Command command = argumentCommand.getCommand();
+            String arg = argumentCommand.getArg();
+            command.execute(arg, socket);
+        }
+
+        if (o instanceof SerializedObjectCommand) {
+            SerializedObjectCommand objectCommand = (SerializedObjectCommand) o;
+            Command command = objectCommand.getCommand();
+            String arg = "";
+            command.execute(arg, socket);
+        }
+
+        if (o instanceof SerializedCombinedCommand) {
+            SerializedCombinedCommand combinedCommand = (SerializedCombinedCommand) o;
+            Command command = combinedCommand.getCommand();
+            String arg = combinedCommand.getArg();
+            command.execute(arg, socket);
         }
     }
 }

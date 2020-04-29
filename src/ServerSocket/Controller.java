@@ -20,7 +20,7 @@ public class Controller {
                     clientSocket = server.accept();
                     System.out.println("А я все думал, когда же ты появишься: " + clientSocket);
                     try {
-                        for (;;) {
+                        while (true) {
                             in = new ObjectInputStream(clientSocket.getInputStream());
                             Decrypting decrypting = new Decrypting(clientSocket);
                             Object o = in.readObject();
