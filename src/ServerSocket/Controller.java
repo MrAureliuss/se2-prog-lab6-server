@@ -1,5 +1,6 @@
 package ServerSocket;
 
+import Collection.CollectionManager;
 import Utils.CommandHandler.Decrypting;
 
 import java.io.*;
@@ -14,6 +15,8 @@ public class Controller {
     public void run() throws IOException {
         try {
             try {
+                CollectionManager.initList();
+                System.out.println("Создана коллеция для работы");
                 server = new ServerSocket(4322);
                 System.out.println("Сервер запущен!");
                 while (true) {

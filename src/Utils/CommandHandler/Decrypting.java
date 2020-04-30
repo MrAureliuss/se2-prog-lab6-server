@@ -34,7 +34,7 @@ public class Decrypting {
         if (o instanceof SerializedObjectCommand) {
             SerializedObjectCommand objectCommand = (SerializedObjectCommand) o;
             Command command = objectCommand.getCommand();
-            String arg = "";
+            Object arg = objectCommand.getObject();
             command.execute(arg, socket);
         }
 

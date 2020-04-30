@@ -13,7 +13,7 @@ public class MaxByGroupAdmin extends Command {
     private static final long serialVersionUID = 32L;
 
     @Override
-    public void execute(String arg, Socket socket) throws IOException {
+    public void execute(Object argObject, Socket socket) throws IOException {
         CommandReceiver commandReceiver = new CommandReceiver(socket);
         commandReceiver.maxByGroupAdmin();
     }

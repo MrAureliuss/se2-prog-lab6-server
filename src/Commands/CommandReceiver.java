@@ -1,5 +1,9 @@
 package Commands;
 
+import BasicClasses.StudyGroup;
+import Collection.CollectionManager;
+import Collection.CollectionUtils;
+import Commands.ConcreteCommands.Add;
 import Commands.ConcreteCommands.Info;
 import Commands.SerializedCommands.*;
 
@@ -18,18 +22,25 @@ public class CommandReceiver {
 
     public void info() throws IOException {
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-        System.out.println(socket);
-        out.writeObject(new SerializedArgumentCommand(new Info(), "Cock\nABC\nrrrrr"));
+
+        out.writeObject(new SerializedArgumentCommand(new Info(), CollectionManager.getInfo()));
         System.out.println("INFO");
     }
 
-    public void show() {
-        //CollectionManager.show();
+    public void show() throws IOException {
+        ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+        out.writeObject(new SerializedArgumentCommand(new Info(), CollectionManager.show()));
+
+        System.out.println("SHOW");
     }
 
-    public void add() {
-        /*CollectionManager.add(ElementCreator.createStudyGroup());
-        System.out.println("Элемент добавлен в коллекцию."); */
+    public void add(Object o) throws IOException {
+        StudyGroup studyGroup = (StudyGroup) o;
+        CollectionManager.add(studyGroup);
+        ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+
+        out.writeObject(new SerializedArgumentCommand(new Add(), "Элемент добавлен в коллекцию."));
+        System.out.println("ADD");
     }
 
     /**
@@ -51,17 +62,20 @@ public class CommandReceiver {
      *
      * @param ID - удаление по ID.
      */
-    public void removeById(String ID) {
-        /*Integer groupId;
+    public void removeById(String ID) throws IOException {
+        Integer groupId;
+        ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
         try {
             groupId = Integer.parseInt(ID);
             if (CollectionUtils.checkExist(groupId)) {
-                CollectionManager.remove_by_id(groupId);
-                System.out.println("Элемент с ID " + groupId + " успешно удален из коллекции.");
-            } else {System.out.println("Элемента с таким ID нет в коллекции.");}
+                CollectionManager.removeById(groupId);
+                out.writeObject(new SerializedArgumentCommand(new Add(), "Элемент с ID " + groupId + " успешно удален из коллекции."));
+            } else { out.writeObject(new SerializedArgumentCommand(new Add(), "Элемента с таким ID нет в коллекции."));}
         } catch (NumberFormatException e) {
-            System.out.println("Команда не выполнена. Вы ввели некорректный аргумент.");
-        }*/
+            out.writeObject(new SerializedArgumentCommand(new Add(), "Команда не выполнена. Вы ввели некорректный аргумент."));
+        }
+
+        System.out.println("REMOVE_BY_ID");
     }
 
     public void clear() {

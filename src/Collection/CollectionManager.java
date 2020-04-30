@@ -1,10 +1,11 @@
 package Collection;
 
 import BasicClasses.*;
+import Commands.ConcreteCommands.Info;
+
 import java.time.ZonedDateTime;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.LinkedList;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Менеджер коллекцией. Описывает логику команд, выполняющих работу с коллекцией.
@@ -30,15 +31,19 @@ public class CollectionManager {
         linkedList.add(studyGroup);
     }
 
-    public static void getInfo() {
-        System.out.println("Тип коллекции – " + linkedList.getClass().getName());
-        System.out.println("Дата инициализации коллекции – " + creationDate);
-        System.out.println("Количество элементов в коллекции – " + linkedList.size());
-        System.out.println("_________________________________________________________\n");
+    public static String getInfo() {
+        String info = "";
+        info += "Тип коллекции – " + linkedList.getClass().getName() + "\n";
+        info += "Дата инициализации коллекции – " + creationDate + "\n";
+        info += "Количество элементов в коллекции – " + linkedList.size() + "\n";
+        info += "_________________________________________________________\n";
+
+        return info;
     }
 
-    public static void show() {
-        linkedList.forEach(CollectionUtils::display);
+    public static String show() {
+        String info = linkedList.stream().map(CollectionUtils::display).collect(Collectors.joining(", "));
+        return info;
     }
 
     public static void update(StudyGroup groupToUpdate, Integer elementId) {
@@ -54,7 +59,7 @@ public class CollectionManager {
         });
     }
 
-    public static void remove_by_id(Integer groupId) {
+    public static void removeById(Integer groupId) {
         linkedList.forEach(studyGroup -> {
             if (studyGroup.getId().equals(groupId)) { linkedList.remove(studyGroup); }
         });
