@@ -25,7 +25,7 @@ public class CommandReceiver {
     public void info() throws IOException {
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 
-        out.writeObject(new SerializedArgumentCommand(new Info(), CollectionManager.getInfo()));
+        out.writeObject(new SerializedMessage(CollectionManager.getInfo()));
         System.out.println("INFO");
     }
 
