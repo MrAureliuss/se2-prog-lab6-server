@@ -77,12 +77,17 @@ public class CollectionManager {
         return res;
     }
 
-    public static void removeGreater(StudyGroup studyGroup) {
+    public static String removeGreater(StudyGroup studyGroup) {
+        res.clear();
         linkedList.forEach(listStudyGroup -> {
             if (listStudyGroup.compareTo(studyGroup) > 0) {
+                appendToList(listStudyGroup.getId());
                 linkedList.remove(listStudyGroup);
-            } else { System.out.println("Таких элементов не найдено"); }
+            }
         });
+
+        if (res.isEmpty()) return "Таких элементов не найдено";
+        return "Из коллекции удалены элементы с ID: " + res.toString().replaceAll("[\\[\\]]", "");
     }
 
     public static String removeLower(StudyGroup studyGroup) {

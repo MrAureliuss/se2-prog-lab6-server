@@ -97,9 +97,10 @@ public class CommandReceiver {
         System.out.println("HEAD");
     }
 
-    public void removeGreater() {
-        //CollectionManager.remove_greater(ElementCreator.createStudyGroup());
+    public void removeGreater(StudyGroup studyGroup) throws IOException {
+        ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 
+        out.writeObject(new SerializedMessage(CollectionManager.removeGreater(studyGroup)));
         System.out.println("REMOVE_GREATER");
     }
 
