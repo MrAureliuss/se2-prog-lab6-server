@@ -101,11 +101,11 @@ public class CollectionManager {
         return "Из коллекции удалены элементы с ID: " + res.toString().replaceAll("[\\[\\]]", "");
     }
 
-    public static void minBySemesterEnum() {
+    public static String minBySemesterEnum() {
         if (linkedList.size() > 0) {
-            CollectionUtils.display(Collections.min(linkedList,
+            return CollectionUtils.display(Collections.min(linkedList,
                     Comparator.comparingInt(studyGroup -> studyGroup.getSemesterEnum().getValue())));
-        } else { System.out.println("Коллекция пуста."); }
+        } else { return "Коллекция пуста."; }
     }
 
     public static String maxByGroupAdmin() {

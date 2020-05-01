@@ -112,9 +112,10 @@ public class CommandReceiver {
         System.out.println("REMOVE_LOWER");
     }
 
-    public void minBySemesterEnum() {
-        //CollectionManager.min_by_semester_enum();
+    public void minBySemesterEnum() throws IOException {
+        ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 
+        out.writeObject(new SerializedMessage(CollectionManager.minBySemesterEnum()));
         System.out.println("MIN_BY_SEMESTER_ENUM");
     }
 
