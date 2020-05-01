@@ -32,7 +32,7 @@ public class CommandReceiver {
     public void show() throws IOException {
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 
-        out.writeObject(new SerializedArgumentCommand(new Info(), CollectionManager.show()));
+        out.writeObject(new SerializedMessage(CollectionManager.show()));
         System.out.println("SHOW");
     }
 
@@ -41,7 +41,7 @@ public class CommandReceiver {
         CollectionManager.add(studyGroup);
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 
-        out.writeObject(new SerializedArgumentCommand(new Add(), "Элемент добавлен в коллекцию."));
+        out.writeObject(new SerializedMessage("Элемент добавлен в коллекцию."));
         System.out.println("ADD");
     }
 
@@ -56,11 +56,11 @@ public class CommandReceiver {
             groupId = Integer.parseInt(ID);
             if (CollectionUtils.checkExist(groupId)) {
                 CollectionManager.update(studyGroup, groupId);
-                out.writeObject(new SerializedArgumentCommand(new Update(), "Команда update выполнена."));
+                out.writeObject(new SerializedMessage("Команда update выполнена."));
             }
-            else {out.writeObject(new SerializedArgumentCommand(new Update(), "Элемента с таким ID нет в коллекции."));}
+            else {out.writeObject(new SerializedMessage("Элемента с таким ID нет в коллекции."));}
         } catch (NumberFormatException e) {
-            out.writeObject(new SerializedArgumentCommand(new Update(), "Команда не выполнена. Вы ввели некорректный аргумент."));
+            out.writeObject(new SerializedMessage("Команда не выполнена. Вы ввели некорректный аргумент."));
         }
 
         System.out.println("UPDATE");
@@ -77,10 +77,10 @@ public class CommandReceiver {
             groupId = Integer.parseInt(ID);
             if (CollectionUtils.checkExist(groupId)) {
                 CollectionManager.removeById(groupId);
-                out.writeObject(new SerializedArgumentCommand(new Add(), "Элемент с ID " + groupId + " успешно удален из коллекции."));
-            } else { out.writeObject(new SerializedArgumentCommand(new Add(), "Элемента с таким ID нет в коллекции."));}
+                out.writeObject(new SerializedMessage("Элемент с ID " + groupId + " успешно удален из коллекции."));
+            } else { out.writeObject(new SerializedMessage("Элемента с таким ID нет в коллекции."));}
         } catch (NumberFormatException e) {
-            out.writeObject(new SerializedArgumentCommand(new Add(), "Команда не выполнена. Вы ввели некорректный аргумент."));
+            out.writeObject(new SerializedMessage("Команда не выполнена. Вы ввели некорректный аргумент."));
         }
 
         System.out.println("REMOVE_BY_ID");
@@ -96,7 +96,7 @@ public class CommandReceiver {
     public void head() throws IOException {
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 
-        out.writeObject(new SerializedArgumentCommand(new Head(), CollectionManager.head()));
+        out.writeObject(new SerializedMessage(CollectionManager.head()));
         System.out.println("HEAD");
     }
 
