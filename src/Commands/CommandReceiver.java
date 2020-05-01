@@ -1,5 +1,6 @@
 package Commands;
 
+import BasicClasses.Person;
 import BasicClasses.StudyGroup;
 import Collection.CollectionManager;
 import Collection.CollectionUtils;
@@ -123,9 +124,10 @@ public class CommandReceiver {
         System.out.println("MAX_BY_GROUP_ADMIN");
     }
 
-    public void countByGroupAdmin() {
-        //CollectionManager.countByGroupAdmin(ElementCreator.createPerson());
+    public void countByGroupAdmin(Person groupAdmin) throws IOException {
+        ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 
+        out.writeObject(new SerializedMessage(CollectionManager.countByGroupAdmin(groupAdmin)));
         System.out.println("COUNT_BY_GROUP_ADMIN");
     }
 }

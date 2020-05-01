@@ -117,8 +117,8 @@ public class CollectionManager {
         } else { System.out.println("Коллекция пуста."); }
     }
 
-    public static void countByGroupAdmin(Person groupAdmin) {
-        System.out.println(linkedList.stream().filter(studyGroup -> studyGroup.getGroupAdmin().equals(groupAdmin)).count());
+    public static String countByGroupAdmin(Person groupAdmin) {
+        return Long.toString(linkedList.stream().filter(studyGroup -> studyGroup.getGroupAdmin().equals(groupAdmin)).count());
     }
 
     public static void appendToList(Object o){

@@ -1,5 +1,6 @@
 package Commands.ConcreteCommands;
 
+import BasicClasses.Person;
 import Commands.Command;
 import Commands.CommandReceiver;
 
@@ -15,7 +16,7 @@ public class CountByGroupAdmin extends Command {
     @Override
     public void execute(Object argObject, Socket socket) throws IOException {
         CommandReceiver commandReceiver = new CommandReceiver(socket);
-        commandReceiver.countByGroupAdmin();
+        commandReceiver.countByGroupAdmin((Person) argObject);
     }
 
 }
