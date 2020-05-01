@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 public class CollectionManager {
     private static LinkedList<StudyGroup> linkedList;
     private static ZonedDateTime creationDate;
+    private static List res = new ArrayList();
 
     public static void initList() {
         if (linkedList == null) { linkedList = new LinkedList<>(); creationDate = ZonedDateTime.now(); }
@@ -76,7 +77,7 @@ public class CollectionManager {
         return res;
     }
 
-    public static void remove_greater(StudyGroup studyGroup) {
+    public static void removeGreater(StudyGroup studyGroup) {
         linkedList.forEach(listStudyGroup -> {
             if (listStudyGroup.compareTo(studyGroup) > 0) {
                 linkedList.remove(listStudyGroup);
@@ -84,15 +85,20 @@ public class CollectionManager {
         });
     }
 
-    public static void remove_lower(StudyGroup studyGroup) {
+    public static String removeLower(StudyGroup studyGroup) {
+        res.clear();
         linkedList.forEach(listStudyGroup -> {
             if (listStudyGroup.compareTo(studyGroup) < 0) {
+                appendToList(listStudyGroup.getId());
                 linkedList.remove(listStudyGroup);
-            } else { System.out.println("Таких элементов не найдено"); }
+            }
         });
+
+        if (res.isEmpty()) return "Таких элементов не найдено";
+        return "Из коллекции удалены элементы с id: " + res.toString();
     }
 
-    public static void min_by_semester_enum() {
+    public static void minBySemesterEnum() {
         if (linkedList.size() > 0) {
             CollectionUtils.display(Collections.min(linkedList,
                     Comparator.comparingInt(studyGroup -> studyGroup.getSemesterEnum().getValue())));
@@ -108,5 +114,9 @@ public class CollectionManager {
 
     public static void countByGroupAdmin(Person groupAdmin) {
         System.out.println(linkedList.stream().filter(studyGroup -> studyGroup.getGroupAdmin().equals(groupAdmin)).count());
+    }
+
+    public static void appendToList(Object o){
+        res.add(o);
     }
 }

@@ -1,5 +1,6 @@
 package Commands.ConcreteCommands;
 
+import BasicClasses.StudyGroup;
 import Commands.Command;
 import Commands.CommandReceiver;
 
@@ -15,6 +16,6 @@ public class RemoveLower extends Command {
     @Override
     public void execute(Object argObject, Socket socket) throws IOException {
         CommandReceiver commandReceiver = new CommandReceiver(socket);
-        commandReceiver.removeLower();
+        commandReceiver.removeLower((StudyGroup) argObject);
     }
 }

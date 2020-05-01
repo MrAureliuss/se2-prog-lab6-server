@@ -3,10 +3,6 @@ package Commands;
 import BasicClasses.StudyGroup;
 import Collection.CollectionManager;
 import Collection.CollectionUtils;
-import Commands.ConcreteCommands.Add;
-import Commands.ConcreteCommands.Head;
-import Commands.ConcreteCommands.Info;
-import Commands.ConcreteCommands.Update;
 import Commands.SerializedCommands.*;
 
 import java.io.*;
@@ -107,9 +103,10 @@ public class CommandReceiver {
         System.out.println("REMOVE_GREATER");
     }
 
-    public void removeLower() {
-        //CollectionManager.remove_lower(ElementCreator.createStudyGroup());
+    public void removeLower(StudyGroup studyGroup) throws IOException {
+        ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 
+        out.writeObject(new SerializedMessage(CollectionManager.removeLower(studyGroup)));
         System.out.println("REMOVE_LOWER");
     }
 
