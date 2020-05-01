@@ -41,8 +41,7 @@ public class Decrypting {
         if (o instanceof SerializedCombinedCommand) {
             SerializedCombinedCommand combinedCommand = (SerializedCombinedCommand) o;
             Command command = combinedCommand.getCommand();
-            String arg = combinedCommand.getArg();
-            command.execute(arg, socket);
+            command.execute(combinedCommand, socket);
         }
     }
 }

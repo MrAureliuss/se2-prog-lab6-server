@@ -1,7 +1,9 @@
 package Commands.ConcreteCommands;
 
+import BasicClasses.StudyGroup;
 import Commands.Command;
 import Commands.CommandReceiver;
+import Commands.SerializedCommands.SerializedCombinedCommand;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -14,10 +16,12 @@ public class Update extends Command {
 
     @Override
     public void execute(Object argObject, Socket socket) throws IOException {
-        String arg = argObject.toString();
+        SerializedCombinedCommand combinedCommand = (SerializedCombinedCommand) argObject;
+        String arg =  combinedCommand.getArg();
+        StudyGroup studyGroup = (StudyGroup) combinedCommand.getObject();
         if (arg.split(" ").length == 1) {
             CommandReceiver commandReceiver = new CommandReceiver(socket);
-            commandReceiver.update(arg);
+            commandReceiver.update(arg, studyGroup);
         }
         else { System.out.println("Некорректное количество аргументов. Для справки напишите help."); }
     }

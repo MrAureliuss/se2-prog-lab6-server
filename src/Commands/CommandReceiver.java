@@ -5,6 +5,7 @@ import Collection.CollectionManager;
 import Collection.CollectionUtils;
 import Commands.ConcreteCommands.Add;
 import Commands.ConcreteCommands.Info;
+import Commands.ConcreteCommands.Update;
 import Commands.SerializedCommands.*;
 
 import java.io.*;
@@ -47,15 +48,19 @@ public class CommandReceiver {
      *
      * @param ID - апдейт элемента по ID.
      */
-    public void update(String ID) {
-        /*Integer groupId;
+    public void update(String ID, StudyGroup studyGroup) throws IOException {
+        Integer groupId;
+        ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
         try {
             groupId = Integer.parseInt(ID);
-            if (CollectionUtils.checkExist(groupId)) { CollectionManager.update(ElementCreator.createStudyGroup(), groupId); }
-            else {System.out.println("Элемента с таким ID нет в коллекции.");}
+            if (CollectionUtils.checkExist(groupId)) {
+                CollectionManager.update(studyGroup, groupId);
+                out.writeObject(new SerializedArgumentCommand(new Update(), "Команда update выполнена."));
+            }
+            else {out.writeObject(new SerializedArgumentCommand(new Update(), "Элемента с таким ID нет в коллекции."));}
         } catch (NumberFormatException e) {
-            System.out.println("Команда не выполнена. Вы ввели некорректный аргумент.");
-        } */
+            out.writeObject(new SerializedArgumentCommand(new Update(), "Команда не выполнена. Вы ввели некорректный аргумент."));
+        }
     }
 
     /**
