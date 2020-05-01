@@ -118,9 +118,10 @@ public class CommandReceiver {
         System.out.println("MIN_BY_SEMESTER_ENUM");
     }
 
-    public  void maxByGroupAdmin() {
-        //CollectionManager.maxByGroupAdmin();
+    public  void maxByGroupAdmin() throws IOException {
+        ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 
+        out.writeObject(new SerializedMessage(CollectionManager.maxByGroupAdmin()));
         System.out.println("MAX_BY_GROUP_ADMIN");
     }
 

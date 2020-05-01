@@ -71,10 +71,8 @@ public class CollectionManager {
     }
 
     public static String head() {
-        String res;
-        if (linkedList.size() > 0) { res = CollectionUtils.display(linkedList.getFirst()); }
-        else { res = "Коллекция пуста."; }
-        return res;
+        if (linkedList.size() > 0) { return CollectionUtils.display(linkedList.getFirst()); }
+        else { return  "Коллекция пуста."; }
     }
 
     public static String removeGreater(StudyGroup studyGroup) {
@@ -110,11 +108,11 @@ public class CollectionManager {
         } else { System.out.println("Коллекция пуста."); }
     }
 
-    public static void maxByGroupAdmin() {
+    public static String maxByGroupAdmin() {
         if (linkedList.size() > 0) {
-            CollectionUtils.display(Collections.max(linkedList,
+            return CollectionUtils.display(Collections.max(linkedList,
                     Comparator.comparingInt(studyGroup -> studyGroup.getGroupAdmin().compareValue())));
-        } else { System.out.println("Коллекция пуста."); }
+        } else { return "Коллекция пуста."; }
     }
 
     public static String countByGroupAdmin(Person groupAdmin) {
