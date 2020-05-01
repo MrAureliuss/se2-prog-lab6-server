@@ -69,9 +69,11 @@ public class CollectionManager {
         linkedList.clear();
     }
 
-    public static void head() {
-        if (linkedList.size() > 0) { CollectionUtils.display(linkedList.getFirst()); }
-        else { System.out.println("Коллекция пуста."); }
+    public static String head() {
+        String res;
+        if (linkedList.size() > 0) { res = CollectionUtils.display(linkedList.getFirst()); }
+        else { res = "Коллекция пуста."; }
+        return res;
     }
 
     public static void remove_greater(StudyGroup studyGroup) {

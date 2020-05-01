@@ -4,6 +4,7 @@ import BasicClasses.StudyGroup;
 import Collection.CollectionManager;
 import Collection.CollectionUtils;
 import Commands.ConcreteCommands.Add;
+import Commands.ConcreteCommands.Head;
 import Commands.ConcreteCommands.Info;
 import Commands.ConcreteCommands.Update;
 import Commands.SerializedCommands.*;
@@ -30,8 +31,8 @@ public class CommandReceiver {
 
     public void show() throws IOException {
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-        out.writeObject(new SerializedArgumentCommand(new Info(), CollectionManager.show()));
 
+        out.writeObject(new SerializedArgumentCommand(new Info(), CollectionManager.show()));
         System.out.println("SHOW");
     }
 
@@ -61,6 +62,7 @@ public class CommandReceiver {
         } catch (NumberFormatException e) {
             out.writeObject(new SerializedArgumentCommand(new Update(), "Команда не выполнена. Вы ввели некорректный аргумент."));
         }
+
         System.out.println("UPDATE");
     }
 
@@ -87,36 +89,44 @@ public class CommandReceiver {
     public void clear() {
         /*CollectionManager.clear();
         System.out.println("Коллекция успешно очищена.");*/
+
         System.out.println("CLEAR");
     }
 
-    public void head() {
-       // CollectionManager.head();
+    public void head() throws IOException {
+        ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+
+        out.writeObject(new SerializedArgumentCommand(new Head(), CollectionManager.head()));
         System.out.println("HEAD");
     }
 
     public void removeGreater() {
         //CollectionManager.remove_greater(ElementCreator.createStudyGroup());
+
         System.out.println("REMOVE_GREATER");
     }
 
     public void removeLower() {
         //CollectionManager.remove_lower(ElementCreator.createStudyGroup());
+
         System.out.println("REMOVE_LOWER");
     }
 
     public void minBySemesterEnum() {
         //CollectionManager.min_by_semester_enum();
+
         System.out.println("MIN_BY_SEMESTER_ENUM");
     }
 
     public  void maxByGroupAdmin() {
         //CollectionManager.maxByGroupAdmin();
+
         System.out.println("MAX_BY_GROUP_ADMIN");
     }
 
     public void countByGroupAdmin() {
         //CollectionManager.countByGroupAdmin(ElementCreator.createPerson());
+
         System.out.println("COUNT_BY_GROUP_ADMIN");
     }
 }
