@@ -86,10 +86,11 @@ public class CommandReceiver {
         System.out.println("REMOVE_BY_ID");
     }
 
-    public void clear() {
-        /*CollectionManager.clear();
-        System.out.println("Коллекция успешно очищена.");*/
+    public void clear() throws IOException {
+        CollectionManager.clear();
+        ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 
+        out.writeObject(new SerializedMessage("Коллекция успешно очищена."));
         System.out.println("CLEAR");
     }
 
