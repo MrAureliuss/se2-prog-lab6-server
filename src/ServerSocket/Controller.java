@@ -32,7 +32,7 @@ public class Controller {
 
                     } catch (EOFException ex) {
                         System.out.println("Клиент " + clientSocket + " того, откинулся...");
-                    } finally { // в любом случае сокет будет закрыт
+                    } finally {
                         clientSocket.close();
                         if (in != null) { in.close(); }
                     }

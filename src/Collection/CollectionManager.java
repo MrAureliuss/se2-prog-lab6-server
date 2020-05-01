@@ -44,6 +44,7 @@ public class CollectionManager {
 
     public static String show() {
         String info = linkedList.stream().map(CollectionUtils::display).collect(Collectors.joining(", "));
+        if (info.equals("")) { info = "На данный момент коллекция пуста."; }
         return info;
     }
 
