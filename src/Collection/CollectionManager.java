@@ -95,7 +95,7 @@ public class CollectionManager {
         });
 
         if (res.isEmpty()) return "Таких элементов не найдено";
-        return "Из коллекции удалены элементы с id: " + res.toString();
+        return "Из коллекции удалены элементы с ID: " + res.toString().replaceAll("[\\[\\]]", "");
     }
 
     public static void minBySemesterEnum() {
