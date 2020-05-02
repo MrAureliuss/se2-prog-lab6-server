@@ -5,7 +5,7 @@ import BasicClasses.StudyGroup;
 import Collection.CollectionManager;
 import Collection.CollectionUtils;
 import Commands.SerializedCommands.*;
-import ServerSocket.Controller;
+import Utils.Validator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,11 +38,16 @@ public class CommandReceiver {
     }
 
     public void add(Object o) throws IOException {
-        StudyGroup studyGroup = (StudyGroup) o;
-        CollectionManager.add(studyGroup);
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+        StudyGroup studyGroup = (StudyGroup) o;
 
-        out.writeObject(new SerializedMessage("Элемент добавлен в коллекцию."));
+        if (Validator.validateStudyGroup(studyGroup)) {
+            CollectionManager.add(studyGroup);
+            out.writeObject(new SerializedMessage("Элемент добавлен в коллекцию."));
+        } else {
+            out.writeObject(new SerializedMessage("Полученный элемент не прошел валидацию на стороне сервера."));
+        }
+
         logger.info(String.format("Клиенту %s:%s отправлен результат работы команды ADD", socket.getInetAddress(), socket.getPort()));
     }
 
@@ -56,8 +61,12 @@ public class CommandReceiver {
         try {
             groupId = Integer.parseInt(ID);
             if (CollectionUtils.checkExist(groupId)) {
-                CollectionManager.update(studyGroup, groupId);
-                out.writeObject(new SerializedMessage("Команда update выполнена."));
+                if (Validator.validateStudyGroup(studyGroup)) {
+                    CollectionManager.update(studyGroup, groupId);
+                    out.writeObject(new SerializedMessage("Команда update выполнена."));
+                } else {
+                    out.writeObject(new SerializedMessage("Полученный элемент не прошел валидацию на стороне сервера."));
+                }
             }
             else {out.writeObject(new SerializedMessage("Элемента с таким ID нет в коллекции."));}
         } catch (NumberFormatException e) {
@@ -105,14 +114,24 @@ public class CommandReceiver {
     public void removeGreater(StudyGroup studyGroup) throws IOException {
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 
-        out.writeObject(new SerializedMessage(CollectionManager.removeGreater(studyGroup)));
+        if (Validator.validateStudyGroup(studyGroup)) {
+            out.writeObject(new SerializedMessage(CollectionManager.removeGreater(studyGroup)));
+        } else {
+            out.writeObject(new SerializedMessage("Полученный элемент не прошел валидацию на стороне сервера."));
+        }
+
         logger.info(String.format("Клиенту %s:%s отправлен результат работы команды REMOVE_GREATER", socket.getInetAddress(), socket.getPort()));
     }
 
     public void removeLower(StudyGroup studyGroup) throws IOException {
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 
-        out.writeObject(new SerializedMessage(CollectionManager.removeLower(studyGroup)));
+        if (Validator.validateStudyGroup(studyGroup)) {
+            out.writeObject(new SerializedMessage(CollectionManager.removeLower(studyGroup)));
+        } else {
+            out.writeObject(new SerializedMessage("Полученный элемент не прошел валидацию на стороне сервера."));
+        }
+
         logger.info(String.format("Клиенту %s:%s отправлен результат работы команды REMOVE_LOWER", socket.getInetAddress(), socket.getPort()));
     }
 
@@ -133,7 +152,12 @@ public class CommandReceiver {
     public void countByGroupAdmin(Person groupAdmin) throws IOException {
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 
-        out.writeObject(new SerializedMessage(CollectionManager.countByGroupAdmin(groupAdmin)));
+        if (Validator.validatePerson(groupAdmin)) {
+            out.writeObject(new SerializedMessage(CollectionManager.countByGroupAdmin(groupAdmin)));
+        } else {
+            out.writeObject(new SerializedMessage("Полученный элемент не прошел валидацию на стороне сервера."));
+        }
+
         logger.info(String.format("Клиенту %s:%s отправлен результат работы команды COUNT_BY_GROUP_ADMIN", socket.getInetAddress(), socket.getPort()));
     }
 }

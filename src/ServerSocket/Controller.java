@@ -17,13 +17,21 @@ public class Controller {
     private static ObjectInputStream in; // поток чтения из сокета
     private static final Logger logger = LoggerFactory.getLogger(Controller.class);
 
-    public void run() throws IOException {
+    public void run(String strPort) throws IOException {
         try {
             try {
+                int port = 0;
                 CollectionManager.initList();
                 logger.info("Создана пустая коллекция");
                 ParserJson.fromJsonToCollection();
-                server = new ServerSocket(4322);
+                try {
+                    port = Integer.parseInt(strPort);
+                } catch (NumberFormatException ex) {
+                    logger.info("Ошибка! Неправильный формат порта.");
+                    System.exit(0);
+                }
+
+                server = new ServerSocket(port);
                 logger.info("Сервер запущен!");
                 while (true) {
                     clientSocket = server.accept();
