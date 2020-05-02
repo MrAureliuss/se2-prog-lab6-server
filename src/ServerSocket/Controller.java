@@ -2,6 +2,7 @@ package ServerSocket;
 
 import Collection.CollectionManager;
 import Utils.CommandHandler.Decrypting;
+import Utils.JSON.ParserJson;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -15,8 +16,8 @@ public class Controller {
     public void run() throws IOException {
         try {
             try {
-                CollectionManager.initList();
-                System.out.println("Создана коллеция для работы");
+                ParserJson.fromJsonToCollection();
+                System.out.println("Создана коллекция для работы");
                 server = new ServerSocket(4322);
                 System.out.println("Сервер запущен!");
                 while (true) {
