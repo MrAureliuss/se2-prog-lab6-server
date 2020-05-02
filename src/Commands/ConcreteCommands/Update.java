@@ -23,6 +23,5 @@ public class Update extends Command {
             CommandReceiver commandReceiver = new CommandReceiver(socket);
             commandReceiver.update(arg, studyGroup);
         }
-        else { System.out.println("Некорректное количество аргументов. Для справки напишите help."); }
     }
 }

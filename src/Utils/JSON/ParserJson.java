@@ -2,12 +2,15 @@ package Utils.JSON;
 
 import BasicClasses.StudyGroup;
 import Collection.CollectionManager;
+import ServerSocket.Controller;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.TypeAdapter;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -20,6 +23,7 @@ import java.util.List;
  * Класс, отвечающий за сохранение и загрузку JSON.
  */
 public class ParserJson {
+    private static final Logger logger = LoggerFactory.getLogger(ParserJson.class);
     private static String filePath = System.getenv("WORK_FILE_PATH");
     private static GsonBuilder builder = new GsonBuilder();
     private static Gson gson = builder
@@ -43,7 +47,7 @@ public class ParserJson {
         try (FileWriter writer = new FileWriter(filePath)) {
             gson.toJson(CollectionManager.getLinkedList(), writer);
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            logger.error(e.getMessage());
         }
     }
 
@@ -55,14 +59,14 @@ public class ParserJson {
                 if (studyGroups.size() > 0) for (StudyGroup studyGroup: studyGroups) { CollectionManager.addJsonObject(studyGroup); }
 
             } catch (IOException e) {
-                System.out.println(e.getMessage());
+                logger.error(e.getMessage());
             } catch (SecurityException e) {
-                System.out.println("Недостаточно прав для открытия файла.");
+                logger.error("Недостаточно прав для открытия файла.");
             } catch (NullPointerException e) {
-                System.out.println("В файле нет объектов");
+                logger.error("В файле нет объектов");
             } catch (com.google.gson.JsonSyntaxException e) {
-                System.out.println("Ошибка в содержании файла " + e.getMessage());
+                logger.error("Ошибка в содержании файла " + e.getMessage());
             }
-        } else { System.out.println("Переменная окружения не выставлена"); }
+        } else { logger.error("Переменная окружения не выставлена"); }
     }
 }

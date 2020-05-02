@@ -8,21 +8,25 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class Controller {
     private static Socket clientSocket; //сокет для общения
     private static ServerSocket server; // серверсокет
     private static ObjectInputStream in; // поток чтения из сокета
+    private static final Logger logger = LoggerFactory.getLogger(Controller.class);
 
     public void run() throws IOException {
         try {
             try {
                 ParserJson.fromJsonToCollection();
-                System.out.println("Создана коллекция для работы");
+                logger.info("Создана коллекция для работы");
                 server = new ServerSocket(4322);
-                System.out.println("Сервер запущен!");
+                logger.info("Сервер запущен!");
                 while (true) {
                     clientSocket = server.accept();
-                    System.out.println("А я все думал, когда же ты появишься: " + clientSocket);
+                    logger.info("А я все думал, когда же ты появишься: " + clientSocket);
                     try {
                         while (true) {
                             in = new ObjectInputStream(clientSocket.getInputStream());
@@ -32,19 +36,19 @@ public class Controller {
                         }
 
                     } catch (EOFException ex) {
-                        System.out.println("Клиент " + clientSocket + " того, откинулся...");
+                        logger.info("Клиент " + clientSocket + " того, откинулся...");
                     } finally {
                         clientSocket.close();
                         if (in != null) { in.close(); }
                     }
                 }
             } finally {
-                System.out.println("Сервер закрыт!");
+                logger.info("Сервер закрыт!");
                 server.close();
             }
-        } catch (IOException | ClassNotFoundException e) {
+        } catch (IOException | ClassNotFoundException | NullPointerException e) {
             e.printStackTrace();
-            System.err.println(e);
+            logger.error(String.valueOf(e));
         }
     }
 }
