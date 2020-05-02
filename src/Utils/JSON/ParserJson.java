@@ -58,6 +58,7 @@ public class ParserJson {
                 List<StudyGroup> studyGroups = gson.fromJson(reader, new TypeToken<List<StudyGroup>>(){}.getType());
                 if (studyGroups.size() > 0) for (StudyGroup studyGroup: studyGroups) { CollectionManager.addJsonObject(studyGroup); }
 
+                logger.info("Сохраненная коллекция выгруженна");
             } catch (IOException e) {
                 logger.error(e.getMessage());
             } catch (SecurityException e) {

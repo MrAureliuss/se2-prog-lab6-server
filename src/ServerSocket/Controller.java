@@ -21,8 +21,8 @@ public class Controller {
         try {
             try {
                 CollectionManager.initList();
+                logger.info("Создана пустая коллекция");
                 ParserJson.fromJsonToCollection();
-                logger.info("Создана коллекция для работы");
                 server = new ServerSocket(4322);
                 logger.info("Сервер запущен!");
                 while (true) {
