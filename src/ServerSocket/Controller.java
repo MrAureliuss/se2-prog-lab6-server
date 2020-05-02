@@ -20,6 +20,7 @@ public class Controller {
     public void run() throws IOException {
         try {
             try {
+                CollectionManager.initList();
                 ParserJson.fromJsonToCollection();
                 logger.info("Создана коллекция для работы");
                 server = new ServerSocket(4322);
