@@ -7,6 +7,7 @@ import Utils.JSON.ParserJson;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,6 +47,8 @@ public class Controller {
 
                     } catch (EOFException ex) {
                         logger.info("Клиент " + clientSocket + " того, откинулся...");
+                    } catch (SocketException ex) {
+                        logger.info("Клиент " + clientSocket + " того, откинулся с ошибкой...");
                     } finally {
                         clientSocket.close();
                         if (in != null) { in.close(); }
