@@ -1,2 +1,4 @@
 # Project exclude paths
 /out/
+/.idea/
+se2-prog-lab6-server.iml
