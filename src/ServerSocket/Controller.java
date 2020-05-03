@@ -53,6 +53,7 @@ public class Controller {
                     }
                 }
             } finally {
+                if (clientSocket != null) { clientSocket.close(); }
                 logger.info("Сервер закрыт!");
                 server.close();
             }
