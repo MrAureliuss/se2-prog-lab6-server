@@ -45,10 +45,8 @@ public class Controller {
                             decrypting.decrypt(o);
                         }
 
-                    } catch (EOFException ex) {
+                    } catch (EOFException | SocketException ex) {
                         logger.info("Клиент " + clientSocket + " того, откинулся...");
-                    } catch (SocketException ex) {
-                        logger.info("Клиент " + clientSocket + " того, откинулся с ошибкой...");
                     } finally {
                         clientSocket.close();
                         if (in != null) { in.close(); }
