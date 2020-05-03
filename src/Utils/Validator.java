@@ -23,17 +23,17 @@ public class Validator {
 
     public static boolean validateStudyGroup(StudyGroup studyGroup) {
         return studyGroup.getId() != null &&
-            (!studyGroup.getName().equals("") && studyGroup.getName() != null) &&
+            ( studyGroup.getName() != null && !studyGroup.getName().equals("")) &&
             studyGroup.getCoordinates().getX() <= 531 &&
             studyGroup.getCoordinates().getY() > -653f &&
-            (studyGroup.getStudentsCount() > 0 && studyGroup.getStudentsCount() != null) &&
-            (checkExistFormOfEducation(studyGroup.getFormOfEducation().toString()) || studyGroup.getFormOfEducation() == null) &&
+            (studyGroup.getStudentsCount() != null && studyGroup.getStudentsCount() > 0) &&
+            (studyGroup.getFormOfEducation() == null || checkExistFormOfEducation(studyGroup.getFormOfEducation().toString())) &&
             checkExistSemester(studyGroup.getSemesterEnum().toString()) &&
             validatePerson(studyGroup.getGroupAdmin());
     }
 
     public static boolean validatePerson(Person person) {
-        return (!person.getName().equals("") && person.getName() != null) &&
+        return (person.getName() != null && !person.getName().equals("")) &&
                 person.getHeight() > 0 &&
                 checkExistColor(person.getEyeColor().toString()) &&
                 checkExistColor(person.getHairColor().toString()) &&
