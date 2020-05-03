@@ -89,6 +89,6 @@ public class StudyGroup implements Comparable<StudyGroup>, Serializable {
 
     @Override
     public int compareTo(StudyGroup studyGroup) {
-        return this.name.length() - studyGroup.getName().length();
+        return studyGroup.getName().compareTo(this.name);
     }
 }
