@@ -11,7 +11,7 @@
 * [Заключение.](#Заключение)
 
 ### Задание лабораторной работы <a name="Задание"></a>
-![Alt-текст](https://imgur.com/vwf6kNS.jpg)
+![Alt-текст](https://i.imgur.com/7Cf9GwG.jpg)
 ![Alt-текст](https://imgur.com/NOn07t5.jpg)
 [Содержание :arrow_up:](#Содержание)
 
