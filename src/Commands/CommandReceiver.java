@@ -18,6 +18,7 @@ import java.net.Socket;
 public class CommandReceiver {
     private final Socket socket;
     private static final Logger logger = LoggerFactory.getLogger(CommandReceiver.class);
+    private CollectionManager collectionManager = CollectionManager.getCollectionManager();
 
     public CommandReceiver(Socket socket) {
         this.socket = socket;
@@ -26,14 +27,14 @@ public class CommandReceiver {
     public void info() throws IOException {
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 
-        out.writeObject(new SerializedMessage(CollectionManager.getInfo()));
+        out.writeObject(new SerializedMessage(collectionManager.getInfo()));
         logger.info(String.format("Клиенту %s:%s отправлен результат работы команды INFO", socket.getInetAddress(), socket.getPort()));
     }
 
     public void show() throws IOException {
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 
-        out.writeObject(new SerializedMessage(CollectionManager.show()));
+        out.writeObject(new SerializedMessage(collectionManager.show()));
         logger.info(String.format("Клиенту %s:%s отправлен результат работы команды SHOW", socket.getInetAddress(), socket.getPort()));
     }
 
@@ -42,7 +43,7 @@ public class CommandReceiver {
         StudyGroup studyGroup = (StudyGroup) o;
 
         if (Validator.validateStudyGroup(studyGroup)) {
-            CollectionManager.add(studyGroup);
+            collectionManager.add(studyGroup);
             out.writeObject(new SerializedMessage("Элемент добавлен в коллекцию."));
         } else {
             out.writeObject(new SerializedMessage("Полученный элемент не прошел валидацию на стороне сервера."));
@@ -62,7 +63,7 @@ public class CommandReceiver {
             groupId = Integer.parseInt(ID);
             if (CollectionUtils.checkExist(groupId)) {
                 if (Validator.validateStudyGroup(studyGroup)) {
-                    CollectionManager.update(studyGroup, groupId);
+                    collectionManager.update(studyGroup, groupId);
                     out.writeObject(new SerializedMessage("Команда update выполнена."));
                 } else {
                     out.writeObject(new SerializedMessage("Полученный элемент не прошел валидацию на стороне сервера."));
@@ -86,7 +87,7 @@ public class CommandReceiver {
         try {
             groupId = Integer.parseInt(ID);
             if (CollectionUtils.checkExist(groupId)) {
-                CollectionManager.removeById(groupId);
+                collectionManager.removeById(groupId);
                 out.writeObject(new SerializedMessage("Элемент с ID " + groupId + " успешно удален из коллекции."));
             } else { out.writeObject(new SerializedMessage("Элемента с таким ID нет в коллекции."));}
         } catch (NumberFormatException e) {
@@ -97,7 +98,7 @@ public class CommandReceiver {
     }
 
     public void clear() throws IOException {
-        CollectionManager.clear();
+        collectionManager.clear();
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 
         out.writeObject(new SerializedMessage("Коллекция успешно очищена."));
@@ -107,7 +108,7 @@ public class CommandReceiver {
     public void head() throws IOException {
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 
-        out.writeObject(new SerializedMessage(CollectionManager.head()));
+        out.writeObject(new SerializedMessage(collectionManager.head()));
         logger.info(String.format("Клиенту %s:%s отправлен результат работы команды HEAD", socket.getInetAddress(), socket.getPort()));
     }
 
@@ -115,7 +116,7 @@ public class CommandReceiver {
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 
         if (Validator.validateStudyGroup(studyGroup)) {
-            out.writeObject(new SerializedMessage(CollectionManager.removeGreater(studyGroup)));
+            out.writeObject(new SerializedMessage(collectionManager.removeGreater(studyGroup)));
         } else {
             out.writeObject(new SerializedMessage("Полученный элемент не прошел валидацию на стороне сервера."));
         }
@@ -127,7 +128,7 @@ public class CommandReceiver {
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 
         if (Validator.validateStudyGroup(studyGroup)) {
-            out.writeObject(new SerializedMessage(CollectionManager.removeLower(studyGroup)));
+            out.writeObject(new SerializedMessage(collectionManager.removeLower(studyGroup)));
         } else {
             out.writeObject(new SerializedMessage("Полученный элемент не прошел валидацию на стороне сервера."));
         }
@@ -138,14 +139,14 @@ public class CommandReceiver {
     public void minBySemesterEnum() throws IOException {
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 
-        out.writeObject(new SerializedMessage(CollectionManager.minBySemesterEnum()));
+        out.writeObject(new SerializedMessage(collectionManager.minBySemesterEnum()));
         logger.info(String.format("Клиенту %s:%s отправлен результат работы команды MIN_BY_SEMESTER_ENUM", socket.getInetAddress(), socket.getPort()));
     }
 
     public  void maxByGroupAdmin() throws IOException {
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 
-        out.writeObject(new SerializedMessage(CollectionManager.maxByGroupAdmin()));
+        out.writeObject(new SerializedMessage(collectionManager.maxByGroupAdmin()));
         logger.info(String.format("Клиенту %s:%s отправлен результат работы команды MAX_BY_GROUP_ADMIN", socket.getInetAddress(), socket.getPort()));
     }
 
@@ -153,7 +154,7 @@ public class CommandReceiver {
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 
         if (Validator.validatePerson(groupAdmin)) {
-            out.writeObject(new SerializedMessage(CollectionManager.countByGroupAdmin(groupAdmin)));
+            out.writeObject(new SerializedMessage(collectionManager.countByGroupAdmin(groupAdmin)));
         } else {
             out.writeObject(new SerializedMessage("Полученный элемент не прошел валидацию на стороне сервера."));
         }

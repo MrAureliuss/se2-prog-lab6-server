@@ -7,7 +7,8 @@ import BasicClasses.StudyGroup;
  */
 public class CollectionUtils {
     public static boolean checkExist(Integer ID) {
-        for (StudyGroup studyGroup:CollectionManager.getLinkedList()) {
+        CollectionManager collectionManager = CollectionManager.getCollectionManager();
+        for (StudyGroup studyGroup:collectionManager.getLinkedList()) {
             if (studyGroup.getId().equals(ID)) {
                 return true;
             }

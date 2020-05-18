@@ -11,28 +11,38 @@ import java.util.stream.Collectors;
  * Менеджер коллекцией. Описывает логику команд, выполняющих работу с коллекцией.
  */
 public class CollectionManager {
-    private static LinkedList<StudyGroup> linkedList;
-    private static ZonedDateTime creationDate;
-    private static List res = new ArrayList();
+    private LinkedList<StudyGroup> linkedList;
+    private ZonedDateTime creationDate;
+    private List res = new ArrayList();
+    private static CollectionManager collectionManager;
 
-    public static void initList() {
+    private CollectionManager() {}
+
+    public static CollectionManager getCollectionManager() {
+        if (collectionManager == null){
+            collectionManager = new CollectionManager();
+        }
+        return collectionManager;
+    }
+
+    public void initList() {
         if (linkedList == null) { linkedList = new LinkedList<>(); creationDate = ZonedDateTime.now(); }
     }
 
-    public static LinkedList<StudyGroup> getLinkedList() {
+    public LinkedList<StudyGroup> getLinkedList() {
         return linkedList;
     }
 
-    public static void add(StudyGroup studyGroup) {
+    public void add(StudyGroup studyGroup) {
         linkedList.add(studyGroup);
     }
 
-    public static void addJsonObject(StudyGroup studyGroup) {
+    public void addJsonObject(StudyGroup studyGroup) {
         studyGroup.setId(IDGenerator.generateID(studyGroup.getId()));
         linkedList.add(studyGroup);
     }
 
-    public static String getInfo() {
+    public String getInfo() {
         String info = "";
         info += "Тип коллекции – " + linkedList.getClass().getName() + "\n";
         info += "Дата инициализации коллекции – " + creationDate + "\n";
@@ -42,7 +52,7 @@ public class CollectionManager {
         return info;
     }
 
-    public static String show() {
+    public String show() {
         linkedList.sort(Comparator.comparing(StudyGroup::getName));  // Сортировка коллекции по алфавиту.
 
         String info = linkedList
@@ -53,7 +63,7 @@ public class CollectionManager {
         return info;
     }
 
-    public static void update(StudyGroup groupToUpdate, Integer elementId) {
+    public void update(StudyGroup groupToUpdate, Integer elementId) {
         linkedList.forEach(studyGroup -> {
             if (studyGroup.getId().equals(elementId)) {
                 studyGroup.setName(groupToUpdate.getName());
@@ -66,22 +76,22 @@ public class CollectionManager {
         });
     }
 
-    public static void removeById(Integer groupId) {
+    public void removeById(Integer groupId) {
         linkedList.forEach(studyGroup -> {
             if (studyGroup.getId().equals(groupId)) { linkedList.remove(studyGroup); }
         });
     }
 
-    public static void clear() {
+    public void clear() {
         linkedList.clear();
     }
 
-    public static String head() {
+    public String head() {
         if (linkedList.size() > 0) { return CollectionUtils.display(linkedList.getFirst()); }
         else { return  "Коллекция пуста."; }
     }
 
-    public static String removeGreater(StudyGroup studyGroup) {
+    public String removeGreater(StudyGroup studyGroup) {
         res.clear();
         linkedList.forEach(listStudyGroup -> {
             if (listStudyGroup.compareTo(studyGroup) > 0) {
@@ -94,7 +104,7 @@ public class CollectionManager {
         return "Из коллекции удалены элементы с ID: " + res.toString().replaceAll("[\\[\\]]", "");
     }
 
-    public static String removeLower(StudyGroup studyGroup) {
+    public String removeLower(StudyGroup studyGroup) {
         res.clear();
         linkedList.forEach(listStudyGroup -> {
             if (listStudyGroup.compareTo(studyGroup) < 0) {
@@ -107,25 +117,25 @@ public class CollectionManager {
         return "Из коллекции удалены элементы с ID: " + res.toString().replaceAll("[\\[\\]]", "");
     }
 
-    public static String minBySemesterEnum() {
+    public String minBySemesterEnum() {
         if (linkedList.size() > 0) {
             return CollectionUtils.display(Collections.min(linkedList,
                     Comparator.comparingInt(studyGroup -> studyGroup.getSemesterEnum().getValue())));
         } else { return "Коллекция пуста."; }
     }
 
-    public static String maxByGroupAdmin() {
+    public String maxByGroupAdmin() {
         if (linkedList.size() > 0) {
             return CollectionUtils.display(Collections.max(linkedList,
                     Comparator.comparingInt(studyGroup -> studyGroup.getGroupAdmin().compareValue())));
         } else { return "Коллекция пуста."; }
     }
 
-    public static String countByGroupAdmin(Person groupAdmin) {
+    public String countByGroupAdmin(Person groupAdmin) {
         return Long.toString(linkedList.stream().filter(studyGroup -> studyGroup.getGroupAdmin().equals(groupAdmin)).count());
     }
 
-    public static void appendToList(Object o){
+    public void appendToList(Object o){
         res.add(o);
     }
 }

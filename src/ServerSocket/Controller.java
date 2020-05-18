@@ -22,7 +22,8 @@ public class Controller {
         try {
             try {
                 int port = 0;
-                CollectionManager.initList();
+                CollectionManager collectionManager = CollectionManager.getCollectionManager();
+                collectionManager.initList();
                 logger.info("Создана пустая коллекция");
                 ParserJson.fromJsonToCollection();
                 try {

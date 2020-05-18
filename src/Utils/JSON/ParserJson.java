@@ -25,6 +25,7 @@ import java.util.List;
 public class ParserJson {
     private static final Logger logger = LoggerFactory.getLogger(ParserJson.class);
     private static String filePath = System.getenv("WORK_FILE_PATH");
+    private static CollectionManager collectionManager = CollectionManager.getCollectionManager();
     private static GsonBuilder builder = new GsonBuilder();
     private static Gson gson = builder
             .registerTypeAdapter(ZonedDateTime.class, new TypeAdapter<ZonedDateTime>() {
@@ -45,7 +46,7 @@ public class ParserJson {
 
     public static void collectionToJson() {
         try (FileWriter writer = new FileWriter(filePath)) {
-            gson.toJson(CollectionManager.getLinkedList(), writer);
+            gson.toJson(collectionManager.getLinkedList(), writer);
         } catch (IOException e) {
             logger.error(e.getMessage());
         }
@@ -54,9 +55,9 @@ public class ParserJson {
     public static void fromJsonToCollection() {
         if (filePath != null) {
             try (Reader reader = new FileReader(filePath)) {
-                CollectionManager.initList();
+                collectionManager.initList();
                 List<StudyGroup> studyGroups = gson.fromJson(reader, new TypeToken<List<StudyGroup>>(){}.getType());
-                if (studyGroups.size() > 0) for (StudyGroup studyGroup: studyGroups) { CollectionManager.addJsonObject(studyGroup); }
+                if (studyGroups.size() > 0) for (StudyGroup studyGroup: studyGroups) { collectionManager.addJsonObject(studyGroup); }
 
                 logger.info("Сохраненная коллекция выгруженна");
             } catch (IOException e) {
